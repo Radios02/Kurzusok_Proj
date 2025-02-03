@@ -94,7 +94,7 @@ async function saveItem(type, id) {
         data.course_id = courseId;
     }
 
-    // Kurzusok esetén PATCH, diákok esetén PUT metódust használunk
+    // Kurzusok esetén PATCH, diákok esetén PUT metódust használok
     const method = id ? (type === "courses" ? "PATCH" : "PUT") : "POST";
     const endpoint = id ? `${type}/${id}` : type;
 
