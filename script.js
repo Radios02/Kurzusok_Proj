@@ -117,3 +117,35 @@ async function deleteItem(type, id) {
 document.addEventListener("DOMContentLoaded", () => {
     contentDiv.innerHTML = "<p>Select a category.</p>";
 });
+
+
+async function showList(type) {
+    const data = await fetchData(type);
+    contentDiv.innerHTML = "";
+
+    const addButton = document.createElement("button");
+    addButton.textContent = `Add New ${type.slice(0, -1)}`;
+    addButton.className = "primary";
+    addButton.onclick = () => openForm(type);
+    contentDiv.appendChild(addButton);
+
+    const cardContainer = document.createElement("div");
+    cardContainer.className = "card-container";
+    contentDiv.appendChild(cardContainer);
+
+    data.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+            <div class="card-content">
+                <strong>${item.name}</strong>
+                ${type === "courses" ? `<p>ID: ${item.id}</p>` : ""}
+            </div>
+            <div class="card-actions">
+                <button class="primary" onclick="editItem('${type}', ${item.id})">Edit</button>
+                <button class="danger" onclick="deleteItem('${type}', ${item.id})">Delete</button>
+            </div>
+        `;
+        cardContainer.appendChild(card);
+    });
+}
